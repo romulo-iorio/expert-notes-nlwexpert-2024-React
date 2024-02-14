@@ -6,6 +6,8 @@ interface Props {
   setContent: React.Dispatch<React.SetStateAction<string>>;
 }
 
+let speechRecognition: SpeechRecognition | null = null;
+
 export const useRecording = ({
   setShouldShowOnboarding,
   setContent,
@@ -29,7 +31,7 @@ export const useRecording = ({
     const SpeechRecognitionAPI =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    const speechRecognition = new SpeechRecognitionAPI();
+    speechRecognition = new SpeechRecognitionAPI();
 
     speechRecognition.lang = "pt-BR";
     speechRecognition.continuous = true;
@@ -56,10 +58,7 @@ export const useRecording = ({
   const handleStopRecording = () => {
     setIsRecording(false);
 
-    const SpeechRecognitionAPI =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    const speechRecognition = new SpeechRecognitionAPI();
+    if (!speechRecognition) return;
 
     speechRecognition.stop();
   };
