@@ -2,7 +2,7 @@ import { Note } from "../interfaces";
 
 export const useFilterAndSortNotes = (notes: Note[], search: string) => {
   const notesFiltered = notes.filter((note) =>
-    note.content.toLowerCase().includes(search.toLowerCase())
+    note.content.toLocaleLowerCase().includes(search.toLocaleLowerCase())
   );
 
   return notesFiltered.sort(
