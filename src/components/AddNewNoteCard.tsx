@@ -1,7 +1,6 @@
-import { X as XIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as Dialog from "@radix-ui/react-dialog";
+
 import { useRecording } from "../hooks";
 import { NoteDialog } from ".";
 
@@ -40,20 +39,18 @@ export const AddNewNoteCard: React.FC<Props> = ({ onNoteCreated }) => {
   };
 
   return (
-    <NoteDialog
-      triggerClassName="bg-slate-700"
-      Trigger={
-        <>
-          <span className="text-sm font-medium text-slate-200">
-            Adicionar nota
-          </span>
-          <p className="text-sm leading-6 text-slate-400">
-            Grave uma nota em áudio que será convertida para texto
-            automaticamente.
-          </p>
-        </>
-      }
-      Content={
+    <NoteDialog.Root>
+      <NoteDialog.Trigger className="bg-slate-700">
+        <span className="text-sm font-medium text-slate-200">
+          Adicionar nota
+        </span>
+        <p className="text-sm leading-6 text-slate-400">
+          Grave uma nota em áudio que será convertida para texto
+          automaticamente.
+        </p>
+      </NoteDialog.Trigger>
+
+      <NoteDialog.Content>
         <form className="flex-1 flex flex-col">
           <div className="flex flex-1 flex-col gap-3 p-5">
             <span className="text-sm font-medium text-slate-300">
@@ -110,7 +107,7 @@ export const AddNewNoteCard: React.FC<Props> = ({ onNoteCreated }) => {
             </button>
           )}
         </form>
-      }
-    />
+      </NoteDialog.Content>
+    </NoteDialog.Root>
   );
 };

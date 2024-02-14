@@ -20,39 +20,33 @@ export const NoteCard: React.FC<Props> = ({
   );
 
   return (
-    <NoteDialog
-      triggerClassName="bg-slate-800 relative"
-      Trigger={
-        <>
+    <NoteDialog.Root>
+      <NoteDialog.Trigger className="bg-slate-800 relative">
+        <span className="text-sm font-medium text-slate-300">{dateString}</span>
+        <p className="text-sm leading-6 text-slate-400">{content}</p>
+
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-black/0 pointer-events-none" />
+      </NoteDialog.Trigger>
+
+      <NoteDialog.Content>
+        <div className="flex flex-1 flex-col gap-3 p-5">
           <span className="text-sm font-medium text-slate-300">
             {dateString}
           </span>
           <p className="text-sm leading-6 text-slate-400">{content}</p>
+        </div>
 
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-black/0 pointer-events-none" />
-        </>
-      }
-      Content={
-        <>
-          <div className="flex flex-1 flex-col gap-3 p-5">
-            <span className="text-sm font-medium text-slate-300">
-              {dateString}
-            </span>
-            <p className="text-sm leading-6 text-slate-400">{content}</p>
-          </div>
-
-          <button
-            className="w-full bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none font-medium hover:bg-slate-900 focus-visible:bg-slate-900 group"
-            onClick={() => onNoteRemoved(id)}
-            type="button"
-          >
-            Deseja{" "}
-            <span className="text-red-400 group-hover:underline group-focus-visible:underline">
-              apagar essa nota?
-            </span>
-          </button>
-        </>
-      }
-    />
+        <button
+          className="w-full bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none font-medium hover:bg-slate-900 focus-visible:bg-slate-900 group"
+          onClick={() => onNoteRemoved(id)}
+          type="button"
+        >
+          Deseja{" "}
+          <span className="text-red-400 group-hover:underline group-focus-visible:underline">
+            apagar essa nota?
+          </span>
+        </button>
+      </NoteDialog.Content>
+    </NoteDialog.Root>
   );
 };
