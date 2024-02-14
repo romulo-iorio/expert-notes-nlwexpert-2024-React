@@ -28,6 +28,8 @@ export const AddNewNoteCard: React.FC<Props> = ({ onNoteCreated }) => {
 
     onNoteCreated(content);
 
+    setContent("");
+
     toast.success("Nota criada com sucesso!");
   };
 
@@ -75,6 +77,7 @@ export const AddNewNoteCard: React.FC<Props> = ({ onNoteCreated }) => {
                 <textarea
                   className="text-sm leading-6 text-slate-400 bg-transparent resize-none outline-none flex-1"
                   onChange={handleNoteContentChange}
+                  value={content}
                   autoFocus
                 />
               )}
