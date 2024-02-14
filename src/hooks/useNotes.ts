@@ -2,9 +2,11 @@ import { useState } from "react";
 
 import { Note } from "../interfaces";
 
-const getInitialNotesValue = () => {
+const getInitialNotesValue = (): Note[] => {
   const notesJSON = localStorage.getItem("@expert-notes/notes");
-  return notesJSON ? (JSON.parse(notesJSON) as Note[]) : [];
+  if (!notesJSON) return [];
+
+  return JSON.parse(notesJSON) as Note[];
 };
 
 export const useNotes = () => {

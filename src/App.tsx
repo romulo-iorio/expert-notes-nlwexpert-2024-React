@@ -1,21 +1,27 @@
+import { useState } from "react";
+
 import {
   AddNewNoteCard,
   NotesContainer,
   Separator,
   NoteCard,
 } from "./components";
-import { useHandleNotesStorage, useNotes } from "./hooks";
+import {
+  useHandleNotesStorage,
+  useFilterAndSortNotes,
+  useNotes,
+} from "./hooks";
 import logo from "./assets/logo-nlw-expert.svg";
 
 export function App() {
   const { notes, onNoteCreated, onNoteRemoved, setNotes } = useNotes();
   useHandleNotesStorage({ notes, setNotes });
 
-  const notesSortedByDate = notes.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  const [search, setSearch] = useState("");
 
-  const renderNotes = notesSortedByDate.map((note) => (
+  const filteredAndSortedNotes = useFilterAndSortNotes(notes, search);
+
+  const renderNotes = filteredAndSortedNotes.map((note) => (
     <NoteCard key={note.id} note={note} onNoteRemoved={onNoteRemoved} />
   ));
 
@@ -26,6 +32,8 @@ export function App() {
         <input
           className="w-full bg-transparent text-3xl font-semibold tracking-tight placeholder:text-slate-500 outline-none"
           placeholder="Busque em suas notas..."
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
           type="text"
         />
       </form>
