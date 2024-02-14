@@ -1,32 +1,18 @@
-import { useState } from "react";
-
 import {
   AddNewNoteCard,
   NotesContainer,
   Separator,
   NoteCard,
 } from "./components";
-import { Note } from "./interfaces";
+import { useHandleNotesStorage, useNotes } from "./hooks";
 import logo from "./assets/logo-nlw-expert.svg";
 
 export function App() {
-  const [notes, setNotes] = useState<Note[]>([]);
-
-  const onNoteCreated = (content: string) => {
-    const newNote: Note = {
-      id: crypto.randomUUID(),
-      date: new Date(),
-      content,
-    };
-    setNotes((prevNotes) => [newNote, ...prevNotes]);
-  };
-
-  const onNoteRemoved = (id: string) => {
-    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
-  };
+  const { notes, onNoteCreated, onNoteRemoved, setNotes } = useNotes();
+  useHandleNotesStorage({ notes, setNotes });
 
   const notesSortedByDate = notes.sort(
-    (a, b) => b.date.getTime() - a.date.getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
   const renderNotes = notesSortedByDate.map((note) => (
