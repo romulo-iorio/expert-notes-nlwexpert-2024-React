@@ -1,12 +1,38 @@
+import { useState } from "react";
+
 import {
   AddNewNoteCard,
   NotesContainer,
   Separator,
   NoteCard,
 } from "./components";
+import { Note } from "./interfaces";
 import logo from "./assets/logo-nlw-expert.svg";
 
 export function App() {
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  const onNoteCreated = (content: string) => {
+    const newNote: Note = {
+      id: crypto.randomUUID(),
+      date: new Date(),
+      content,
+    };
+    setNotes((prevNotes) => [newNote, ...prevNotes]);
+  };
+
+  const onNoteRemoved = (id: string) => {
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+  };
+
+  const notesSortedByDate = notes.sort(
+    (a, b) => b.date.getTime() - a.date.getTime()
+  );
+
+  const renderNotes = notesSortedByDate.map((note) => (
+    <NoteCard key={note.id} note={note} onNoteRemoved={onNoteRemoved} />
+  ));
+
   return (
     <div className="mx-auto max-w-6xl my-12 space-y-6">
       <img src={logo} alt="NLW Expert" />
@@ -21,11 +47,9 @@ export function App() {
       <Separator />
 
       <NotesContainer>
-        <AddNewNoteCard />
+        <AddNewNoteCard onNoteCreated={onNoteCreated} />
 
-        <NoteCard note={{ date: new Date(), content: "Hello world" }} />
-
-        <NoteCard note={{ date: new Date(2023, 4, 1), content: "Teste" }} />
+        {renderNotes}
       </NotesContainer>
     </div>
   );

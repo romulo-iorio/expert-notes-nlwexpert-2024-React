@@ -3,7 +3,11 @@ import { useState } from "react";
 import { toast } from "sonner";
 import * as Dialog from "@radix-ui/react-dialog";
 
-export const AddNewNoteCard: React.FC = () => {
+interface Props {
+  onNoteCreated: (content: string) => void;
+}
+
+export const AddNewNoteCard: React.FC<Props> = ({ onNoteCreated }) => {
   const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true);
   const [content, setContent] = useState("");
 
@@ -21,6 +25,8 @@ export const AddNewNoteCard: React.FC = () => {
 
   const handleSaveNote = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    onNoteCreated(content);
 
     toast.success("Nota criada com sucesso!");
   };
@@ -75,7 +81,7 @@ export const AddNewNoteCard: React.FC = () => {
             </div>
 
             <button
-              className="w-full bg-lime-400 py-4 text-center text-sm text-lime-950 outline-none font-medium hover:bg-lime-500 transition-colors"
+              className="w-full bg-lime-400 py-4 text-center text-sm text-lime-950 outline-none font-medium hover:bg-lime-500 focus-visible:bg-lime-500 transition-colors"
               type="submit"
             >
               Salvar nota

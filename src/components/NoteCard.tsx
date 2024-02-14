@@ -3,16 +3,19 @@ import { X as XIcon } from "lucide-react";
 import { ptBR } from "date-fns/locale";
 import * as Dialog from "@radix-ui/react-dialog";
 
+import { Note } from "../interfaces";
+
 interface Props {
-  note: {
-    date: Date;
-    content: string;
-  };
+  onNoteRemoved: (id: string) => void;
+  note: Note;
 }
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
-export const NoteCard: React.FC<Props> = ({ note: { date, content } }) => {
+export const NoteCard: React.FC<Props> = ({
+  note: { date, content, id },
+  onNoteRemoved,
+}) => {
   const dateString = capitalize(
     formatDistanceToNow(date, { locale: ptBR, addSuffix: true })
   );
@@ -42,11 +45,12 @@ export const NoteCard: React.FC<Props> = ({ note: { date, content } }) => {
           </div>
 
           <button
-            className="w-full bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none font-medium group"
+            className="w-full bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none font-medium hover:bg-slate-900 focus-visible:bg-slate-900 group"
+            onClick={() => onNoteRemoved(id)}
             type="button"
           >
             Deseja{" "}
-            <span className="text-red-400 group-hover:underline">
+            <span className="text-red-400 group-hover:underline group-focus-visible:underline">
               apagar essa nota?
             </span>
           </button>
