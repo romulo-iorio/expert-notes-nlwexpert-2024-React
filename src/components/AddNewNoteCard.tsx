@@ -29,6 +29,7 @@ export const AddNewNoteCard: React.FC<Props> = ({ onNoteCreated }) => {
     onNoteCreated(content);
 
     setContent("");
+    setShouldShowOnboarding(true);
 
     toast.success("Nota criada com sucesso!");
   };
