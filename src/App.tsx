@@ -16,7 +16,6 @@ import logo from "./assets/logo-nlw-expert.svg";
 export function App() {
   const { notes, onNoteCreated, onNoteRemoved, setNotes } = useNotes();
   useHandleNotesStorage({ notes, setNotes });
-
   const [search, setSearch] = useState("");
 
   const filteredAndSortedNotes = useFilterAndSortNotes(notes, search);
